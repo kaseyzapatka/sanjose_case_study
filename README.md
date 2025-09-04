@@ -11,6 +11,8 @@ I created a virtual environment specifically for this exercise. You can recreate
 - [Zoning shapefiles](https://data.sanjoseca.gov/dataset/zoning-districts/resource/3e2aacc3-f608-483e-85c6-f1be7e1e4995). 
 - San Jose City [zoning codes](https://library.municode.com/ca/san_jose/codes/code_of_ordinances?nodeId=TIT20ZO_CH20.10GEPRZODI_20.10.060ZODIES)
 
-
 ## Data
 Since GitHub has data limitations, all data used for this project can be accessed [here](https://drive.google.com/drive/folders/1rM17LTuIoiBh7mqlefV8dIxEGZeKY9fc?usp=sharing). 
+
+## Running this analysis
+All coded needed to reproduce this analysis is in `code.ipynb` file. The `utils.py` file provides functions called in the analysis. 
