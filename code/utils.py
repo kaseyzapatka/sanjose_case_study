@@ -60,3 +60,77 @@ def sjoin_parcels_to_zd(parcels, zoning, how="largest"):
         raise ValueError("how must be 'largest' or 'first'")
     
     return joined.drop(columns=["index_right"], errors="ignore")
+
+
+
+#
+# Create mapping function
+# ----------------------------------------
+# Create a choropleth map that plots a station point and buffer overlays.
+# Can optionally save the figure to a file and add notes at the bottom.
+
+# libraries
+import matplotlib.pyplot as plt
+import mapclassify
+
+# mapping function
+def choropleth_map(
+    gdf,                                    # data with geometry
+    column,                                 # column to display
+    title,                                  # title
+    station_gdf=None,                       # station overlay
+    buffer_gdf=None,                        # buffer overlay
+    k=5,                                    # number of classes
+    cmap="Blues",                           # color scheme
+    save=False,                             # save figure
+    filename="../output/choropleth_map.pdf", # file name
+    notes=None                              # notes
+):    
+    # ensure consistent CRS
+    gdf = gdf.to_crs(epsg=4269)
+    if station_gdf is not None:
+        station_gdf = station_gdf.to_crs(epsg=4269)
+    if buffer_gdf is not None:
+        buffer_gdf = buffer_gdf.to_crs(epsg=4269)
+    
+    fig, ax = plt.subplots(figsize=(10, 10))
+    ax.axis("off")
+    
+    # main choropleth map
+    gdf.plot(
+        ax=ax,
+        column=column,
+        scheme="NaturalBreaks",
+        k=k,
+        legend=True,
+        cmap=cmap,
+        edgecolor="black",
+        linewidth=0.5
+    )
+    
+    # station overlay
+    if station_gdf is not None:
+        station_gdf.plot(
+            ax=ax, color="black", marker=".", markersize=100, label="Station"
+        )
+    
+    # 2 mile radius overlay
+    if buffer_gdf is not None:
+        buffer_gdf.boundary.plot(
+            ax=ax, color="blue", linestyle="--", linewidth=2, label="Buffer"
+        )
+    
+    # title
+    ax.set_title(title, fontsize=14)
+    
+    # footnotes 
+    if notes:
+        fig.text(0.1, 0.01, notes, ha='left', fontsize=10)
+    
+    # save
+    if save:
+        plt.savefig(filename, format="pdf", bbox_inches="tight")
+        print(f"Figure saved as {filename}")
+
+    
+    plt.show()
