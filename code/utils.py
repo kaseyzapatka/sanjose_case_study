@@ -1,5 +1,5 @@
 #
-# spatial join function
+# Spatial join function
 # --------------------------------------
 
 # import necessary libraries
@@ -64,7 +64,7 @@ def sjoin_parcels_to_zd(parcels, zoning, how="largest"):
 
 
 #
-# Create mapping function
+# Flexible mapping function
 # ----------------------------------------
 # Create a choropleth map that plots a station point and buffer overlays.
 # Can optionally save the figure to a file and add notes at the bottom.
